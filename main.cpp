@@ -26,6 +26,9 @@ vector<FileInfo> listFiles()
 	vector<FileInfo> files;
 	for (const auto& entry : filesystem::directory_iterator("."))
 	{
+		if (!filesystem::is_regular_file(entry.status())) {
+            continue; // Skip directories
+        }
 		FileInfo info;
 		info.filename = entry.path().filename().string();
 		info.lastModifiedDate = convertFileTimeToString(entry.last_write_time());
