@@ -31,7 +31,7 @@ vector<FileInfo> listFiles()
             continue; // Skip directories
         }
 		FileInfo info;
-		info.filename = filesystem::relative(entry.path()).string();
+		info.filename = entry.path().filename().string();
 		info.lastModifiedDate = convertFileTimeToString(entry.last_write_time());
 		info.hash = getFileContentsHash(entry.path().string());
 		files.push_back(info);
