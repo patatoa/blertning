@@ -26,12 +26,11 @@ vector<FileInfo> listFiles()
 	vector<FileInfo> files;
 	for (auto& entry : filesystem::recursive_directory_iterator("."))
 	{
-		if (!entry.is_regular_file()) 
-		{
+		if (entry.is_regular_file()) {
             continue; // Skip directories
         }
 		FileInfo info;
-		info.filename = entry.path().filename().string();
+		info.filename = filesystem::relative(entry.path()).string();
 		info.lastModifiedDate = convertFileTimeToString(entry.last_write_time());
 		info.hash = getFileContentsHash(entry.path().string());
 		files.push_back(info);
