@@ -1,18 +1,17 @@
 #include "FileInfo.h"
 using namespace std;
-using namespace experimental;
 
 vector<FileInfo> listFiles()
 {
     vector<FileInfo> files;
     for (auto& entry : filesystem::recursive_directory_iterator("."))
     {
-        if (!filesystem::is_regular_file(entry)) {
+        if (!entry.is_regular_file()) {
             continue; // Skip directories
         }
         FileInfo info;
         info.filename = entry.path().string();
-        info.lastModifiedDate = convertFileTimeToString(filesystem::last_write_time(entry));
+        info.lastModifiedDate = convertFileTimeToString(entry.last_write_time());
         info.hash = getFileContentsHash(entry.path().string());
         files.push_back(info);
     }
