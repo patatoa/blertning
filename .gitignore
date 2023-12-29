@@ -32,3 +32,5 @@
 *.app
 main
 test.db
+
+build/
